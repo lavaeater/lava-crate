@@ -2,6 +2,7 @@ pub mod camera;
 pub mod ui;
 pub mod general;
 pub mod input;
+pub mod game_state;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right
