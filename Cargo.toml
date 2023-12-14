@@ -17,3 +17,6 @@ bevy_toon_shader = "0.3.0"
 bevy_turborand = "0.7.0"
 bevy_mod_outline = "0.6"
 bevy_mod_picking = "0.17.0"
+big-brain = { git="https://github.com/zkat/big-brain", branch="main" }
+flagset = "0.4.4"
+
