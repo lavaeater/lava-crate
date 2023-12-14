@@ -1,5 +1,6 @@
 pub mod camera;
 pub mod ui;
+mod general;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right
