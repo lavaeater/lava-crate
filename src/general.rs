@@ -17,6 +17,12 @@ impl Plugin for GeneralPlugin {
     }
 }
 
+pub trait CoolDown {
+    /// Returns true if the cool down is finished
+    fn cool_down(&mut self, delta: f32) -> bool;
+}
+
+
 #[derive(Component)]
 pub struct FixChildTransform {
     pub translation: Vec3,
