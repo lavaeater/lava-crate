@@ -6,3 +6,14 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+bevy = "0.12.1"
+bevy_xpbd_3d = { version = "0.3.2", default-features = false, features = ["3d", "f32", "debug-plugin", "collider-from-mesh", "async-collider", "simd", "parallel"] }
+itertools = "0.12.0"
+belly = { git="https://github.com/jkb0o/belly/", branch="0.12" }
+rand = "0.8.5"
+time = { version = "0.3.30", features = [] }
+bevy_atmosphere = "0.8.1"
+bevy_toon_shader = "0.3.0"
+bevy_turborand = "0.7.0"
+bevy_mod_outline = "0.6"
+bevy_mod_picking = "0.17.0"
