@@ -3,7 +3,7 @@ use belly::core::eml::Params;
 use belly::prelude::*;
 use bevy::prelude::*;
 use bevy::app::{App, Plugin, Startup};
-use bevy::prelude::{Commands, Entity, Event, EventReader};
+use bevy::prelude::{Commands, Entity, Event};
 use crate::camera::GameCamera;
 
 pub struct UiPlugin;
@@ -21,7 +21,7 @@ impl Plugin for UiPlugin {
             )
             .add_systems(
                 Update, (
-                    fellow_system,
+                    follow_in_world,
                 ))
         ;
     }
@@ -132,13 +132,13 @@ pub struct AddHealthBar {
 }
 
 #[derive(Component)]
-pub struct Fellow {
+pub struct FollowInWorld {
     pub target: Entity,
 }
 
 #[widget]
-#[param(target: Entity => Fellow: target)]
-fn fellow(ctx: &mut WidgetContext) {
+#[param(target: Entity => FollowInWorld: target)]
+fn follow_in_world(ctx: &mut WidgetContext) {
     let content = ctx.content();
     ctx.render(eml! {
         <span s:left=managed() s:top=managed() s:position-type="absolute">
@@ -147,22 +147,22 @@ fn fellow(ctx: &mut WidgetContext) {
     })
 }
 
-impl FromWorldAndParams for Fellow {
+impl FromWorldAndParams for FollowInWorld {
     fn from_world_and_params(_: &mut World, params: &mut Params) -> Self {
-        Fellow {
+        FollowInWorld {
             target: params.try_get("target").expect("Missing required `target` param")
         }
     }
 }
 
-pub fn fellow_system(
-    mut fellows: Query<(Entity, &Fellow, &mut Style, &Node)>,
+pub fn follow_in_world(
+    mut following_query: Query<(Entity, &FollowInWorld, &mut Style, &Node)>,
     transforms: Query<&GlobalTransform>,
     mut commands: Commands,
     camera_q: Query<(&Camera, &GlobalTransform), With<GameCamera>>,
 ) {
     if let Ok((camera, camera_global_transform)) = camera_q.get_single() {
-        for (entity, follow, mut style, node) in fellows.iter_mut() {
+        for (entity, follow, mut style, node) in following_query.iter_mut() {
             let Ok(tr) = transforms.get(follow.target) else {
                 commands.entity(entity).despawn_recursive();
                 continue;
